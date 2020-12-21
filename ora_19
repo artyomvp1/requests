@@ -1,0 +1,29 @@
+-- Error list - https://docs.oracle.com/cd/B10501_01/appdev.920/a96624/07_errs.htm
+DECLARE
+    v_number NUMBER ;
+    v_exp EXCEPTION ;
+    
+BEGIN
+    v_number := 55 / 0 ;
+    
+    IF v_number >= 10 THEN
+        RAISE v_exp ;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(v_number) ;
+    END IF ;
+
+EXCEPTION
+    WHEN v_exp THEN
+        DBMS_OUTPUT.PUT_LINE('Raise user-defined exception...') ;
+        
+    /*WHEN ZERO_DIVIDE  THEN
+        DBMS_OUTPUT.PUT_LINE('Zero division handling...') ;*/
+        
+    WHEN OTHERS THEN
+        IF SQLCODE = -1476 THEN -- flow control goes here!!!
+            DBMS_OUTPUT.PUT_LINE('Zero division...') ;
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Still unknown') ;
+        END IF ;
+        
+END ;
