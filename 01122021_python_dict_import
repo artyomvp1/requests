@@ -1,0 +1,4 @@
+/*python pypyodbc*/
+
+SELECT LISTAGG(sale_id, ':') WITHIN GROUP(ORDER BY sale_id)
+FROM sales ;
