@@ -3,7 +3,7 @@ SELECT s.sale_id,
 	   s.customer_id, 
 	   CONCAT(c.first_name, '. ', c.last_name),
 	   total_amount,
-     
+     	   --
 	   SUM(total_amount) OVER(PARTITION BY s.customer_id ORDER BY sale_id ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS BONUS_COUNT
      
 FROM sales s
