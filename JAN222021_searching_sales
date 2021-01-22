@@ -1,0 +1,9 @@
+SELECT sale_id,
+	   CONVERT(VARCHAR, sales_date, 6),
+	   s.customer_id, 
+	   total_amount
+FROM sales s
+LEFT JOIN customer c ON c.customer_id = s.customer_id 
+ORDER BY sale_id DESC
+	OFFSET 5 ROWS -- Please order the report this way
+	FETCH NEXT 5 ROWS ONLY
