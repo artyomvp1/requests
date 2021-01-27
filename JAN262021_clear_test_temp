@@ -1,0 +1,4 @@
+SELECT t_id,
+	   SUBSTRING(t_template, CHARINDEX('@', t_template)-5, CHARINDEX('.', t_template)-2)
+FROM regexp_templates
+WHERE t_template LIKE '%@test.%'
