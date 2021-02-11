@@ -8,6 +8,7 @@ FROM sales ;
 SELECT sale_id,
 	   s.customer_id,
 	   price_amount,
-	   PERCENTILE_DISC(0.5) WITHIN GROUP(ORDER BY total_amount) OVER(PARTITION BY NULL) AS PERC_DISC
+	   PERCENTILE_DISC(0.5) WITHIN GROUP(ORDER BY total_amount)
+	   -- PERCENTILE_DISC(0.5) WITHIN GROUP(ORDER BY total_amount) OVER(PARTITION BY NULL) AS PERC_DISC
 FROM sales s
 LEFT JOIN customer c ON c.customer_id = s.customer_id ;
