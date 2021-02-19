@@ -1,0 +1,14 @@
+WITH C AS
+(
+  SELECT testid, studentid, score,
+    RANK() OVER(PARTITION BY testid ORDER BY score) AS rk,
+    COUNT(*) OVER(PARTITION BY testid) AS nr
+  FROM Stats.Scores
+)
+SELECT testid, studentid, score,
+  1.0 * (rk - 1) / (nr - 1) AS percentrank,
+  1.0 * (SELECT COALESCE(MIN(C2.rk) - 1, C1.nr)
+         FROM C AS C2
+         WHERE C2.testid = C1.testid
+           AND C2.rk > C1.rk) / nr AS cumedist
+FROM C AS C1;
