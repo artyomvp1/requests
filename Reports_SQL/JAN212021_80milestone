@@ -1,7 +1,7 @@
 WITH x AS ( SELECT sales.*,
 		   PERCENTILE_DISC(0.8) WITHIN GROUP (ORDER BY total_amount) OVER(PARTITION BY NULL) as MILESTONE
 	    FROM sales 
-)
+	   )
 
 SELECT sale_id, 
 	   sales_date,
@@ -13,4 +13,5 @@ SELECT sale_id,
 FROM x
 LEFT JOIN customer c ON c.customer_id = x.customer_id 
 WHERE x.total_amount >= x.MILESTONE
-ORDER BY sale_id ;
+ORDER BY sale_id 
+;
