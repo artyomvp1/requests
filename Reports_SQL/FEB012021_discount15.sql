@@ -23,8 +23,6 @@ BEGIN
 	WHERE customer_id = @c_id 
 
 	SELECT *
-	FROM @log_table 
-
+	FROM @log_table
+	
 END 
-GO
-;
