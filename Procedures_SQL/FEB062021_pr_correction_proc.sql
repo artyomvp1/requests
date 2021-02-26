@@ -28,5 +28,3 @@ BEGIN
     
 END ;
 /
-
-EXEC proc_price_correction(3) ;
