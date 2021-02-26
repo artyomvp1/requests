@@ -4,7 +4,6 @@ AS
 BEGIN
     EXECUTE IMMEDIATE 'TRUNCATE TABLE daily_cache' ;
     
-
     DELETE
     FROM spd2@SDP
     WHERE transaction_date >= TRUNC(SYSDATE)
@@ -12,8 +11,7 @@ BEGIN
                          FROM spd2@SDP
                          GROUP BY transaction_id, transaction_date, tran_type, sdp_mode, 
                                   number_of_rows, cache_state, commentary
-                        ) ;
-                        
+                        ) ;               
     COMMIT ;
 END ;
 /
