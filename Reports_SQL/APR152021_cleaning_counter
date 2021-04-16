@@ -1,0 +1,8 @@
+-- clean example: MB15MOB_1110922;TOTAL_1320960
+
+SELECT c_id,
+       counter,
+       TRIM(TRAILING ';' FROM REGEXP_SUBSTR(counter, '[0-9]*;') )
+FROM traffic_counters
+
+WHERE counter LIKE 'MB15MOB%' ;
