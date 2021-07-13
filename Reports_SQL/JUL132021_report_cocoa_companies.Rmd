@@ -1,0 +1,50 @@
+---
+title: "Report: Cocoa companies location"
+author: "Artyom"
+date: "7/13/2021"
+output: html_document
+---
+**Note:** created using packages: `tidyverse`, `janitor`
+
+
+```{r loading, include=FALSE}
+library(tidyverse)
+library(dplyr)
+library(janitor)
+
+chocolate_df <- read_csv('~/Downloads/flavors_of_cacao.csv')
+chocolate_df <- clean_names(chocolate_df)
+head(chocolate_df)
+```
+
+**Conditions:**  
+* *The product contains 70+ percent of cocoa;*  
+* *The raiting of the companies is 3.5 or more.* 
+```{r cleaning, echo=TRUE}
+chocolate_df <- chocolate_df %>% 
+  select(company_maker_if_known, cocoa_percent, company_location, rating) %>% 
+  rename(company = company_maker_if_known) %>% 
+  filter(cocoa_percent >= 70, rating >= 3.5)
+```
+  
+**Exemplar**
+```{r overall, echo=FALSE}
+chocolate_df %>% 
+  group_by(company) %>% 
+  summarise(average_rating = mean(rating),
+            min_cocoa_percent  =min(cocoa_percent)) %>% 
+  arrange(-average_rating)
+```
+  
+
+```{r plot, echo=FALSE}
+chocolate_df %>% 
+  group_by(company_location) %>% 
+  summarise(count = n()) %>% 
+  ggplot(aes(x = reorder(company_location, -count), y = count)) +
+  geom_bar(stat = 'identity') + 
+  theme(axis.text.x = element_text(angle=90)) + 
+  labs(title = 'Cocoa Company Locations with Decent Rating Level',
+       x = 'Company Locations',
+       y = 'Number of Companies')
+```
